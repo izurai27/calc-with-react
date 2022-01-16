@@ -1,0 +1,194 @@
+
+import React from 'react';
+import logo from './logo.svg';
+import './App.css';
+import { eventWrapper } from '@testing-library/user-event/dist/utils';
+
+
+
+const comma = '.';
+const equal ='=';
+const allclear = 'AC';
+const clearLast = 'C';
+
+
+
+
+
+class App extends React.Component{
+  constructor (props){
+    super(props);
+    this.state={
+      input:'0',
+      prevOperand:'',
+      operator:''
+    };
+    this.getValue=this.getValue.bind(this);
+    this.handleOperator=this.handleOperator.bind(this);
+    this.handleAC=this.handleAC.bind(this);
+    this.handleClear=this.handleClear.bind(this);
+  }
+
+  getValue(event){
+    if(this.state.input === '0'){
+      this.setState({
+        input:event.target.value
+      })
+    }else{
+      this.setState({
+        input:this.state.input+event.target.value
+      })
+    }
+  }
+
+  handleOperator(event){
+    if (this.state.prevOperand===""){
+        this.setState({
+          prevOperand:this.state.input,
+          input:'0',
+          operator:event.target.value
+        })
+    } else {
+      if (event.target.value !== '='){
+        this.setState({operator:event.target.value})
+      }
+      
+      switch (this.state.operator){
+        case '+' : 
+          return this.setState({ prevOperand : parseFloat(this.state.prevOperand)+parseFloat(this.state.input), input:'0'})
+        break;
+        case '/' : 
+          return this.setState({ prevOperand : parseFloat(this.state.prevOperand)/parseFloat(this.state.input), input:'0'})
+        break;
+        case '*' : 
+          return this.setState({ prevOperand : parseFloat(this.state.prevOperand)*parseFloat(this.state.input), input:'0'})
+        break;
+        case '-' : 
+          return this.setState({ prevOperand : parseFloat(this.state.prevOperand)-parseFloat(this.state.input), input:'0'})
+      }
+
+    }
+    
+  }
+
+  handleAC(event){
+    this.setState({
+      prevOperand:'',
+      input:'0',
+      operator:''
+    })
+  }
+
+  handleClear(event){
+    this.setState({
+      input:'0'
+    })
+  }
+    
+  
+
+  render(){
+    const numbers = [
+      { num:9, idNum:'nine'},
+      { num:8, idNum:'eight'},
+      { num:7, idNum:'seven'},
+      { num:6, idNum:'six'},
+      { num:5, idNum:'five'},
+      { num:4, idNum:'four'},
+      { num:3, idNum:'three'},
+      { num:2, idNum:'two'},
+      { num:1, idNum:'one'},
+      { num:0, idNum:'zero'}
+    ]
+    const operators = [
+      {op:'/', opKey:1, idOp: 'divide' },
+      {op:'*', opKey:2, idOp: 'multiply'},
+      {op:'+', opKey:3, idOp: 'add'},
+      {op:'-', opKey:4, idOp: 'subtract'}
+    ];
+    const opKey = [1,2,3,4];
+   
+
+    console.log(this.state.input,this.state.prevOperand);
+    return (
+      
+      <div className="container">
+      <div className="layar">
+        <input value={this.state.prevOperand} className='layarinput' ></input>
+        <input id="display" value={this.state.input} className='layarinput' ></input>
+      </div>
+      
+      <div className="number">
+        {numbers.map(number => <button id={number.idNum} value={number.num} onClick={this.getValue} className="button num" key={number.num}>{number.num}</button>)}
+        <button id="decimal" value={comma} className="button num" onClick={this.getValue}>{comma}</button>
+        <button id='equals'  value={equal} className="button num" onClick={this.handleOperator}>{equal}</button>
+      </div>
+      <div className="operator">
+        {operators.map(operator=><button id={operator.idOp} value={operator.op} onClick={this.handleOperator} className="button" key={operator.opKey}>{operator.op}</button>)}
+      </div>
+      
+      <div className='clear'>
+        <button id='clear' className="button" onClick={this.handleAC}>{allclear}</button>
+        <button className="button" onClick={this.handleClear}>{clearLast}</button>
+      </div>
+      
+
+      </div>
+    )
+  }
+}
+
+
+export default App;
+
+
+
+if (event.target.value !== '=' ){
+  this.setState({
+    prevOperand:`${this.state.prevOperand}${this.state.input}${event.target.value}`,
+    status:'0',
+    // lastInput:event.target.value,
+    lastOperator:event.target.value,
+    prevResult:this.state.input,
+    
+  })
+  
+} else if(/(\+|\-|\*|\/)$/.test(this.state.prevOperand)){ //-> to avoid double operator (except -)
+  if (event.target.value === '-') {
+    this.setState({
+      prevOperand:`${this.state.prevOperand}${event.target.value}`,
+      // lastInput:event.target.value,
+      // minus:-1
+    })
+  } else {
+    this.setState({
+        prevOperand:`${this.state.prevOperand.slice(0, -1)}${event.target.value}`,
+        // lastInput:event.target.value,
+        lastOperator:event.target.value
+    })
+  }
+  
+} else if(/(\+|\-|\*|\/)\-$/.test(this.state.prevOperand)) {
+  this.setState({
+      prevOperand:`${this.state.prevOperand.slice(0, -3)}${event.target.value}`,
+      // lastInput:event.target.value,
+      lastOperator:event.target.value
+  })
+
+} else{
+if (event.target.value === '='){
+    this.setState({
+      prevOperand : `${this.state.prevOperand}${this.state.input}${event.target.value}`,
+      status:'0',
+      // lastInput:event.target.value,
+      lastOperator:''
+    })
+} else {
+    this.setState({
+      prevOperand : `${this.state.prevOperand}${this.state.input}${event.target.value}`,
+      status:'0',
+      // lastInput:'',
+      lastOperator:event.target.value
+    })
+}
+}  
