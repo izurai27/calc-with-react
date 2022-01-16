@@ -74,7 +74,8 @@ class App extends React.Component{
                   prevOperand:`${this.state.prevOperand.slice(0, -1)}${event.target.value}`,
                   lastOperator:event.target.value,
                   lastInput:event.target.value,
-                  status:'0'
+                  status:'0',
+                  minus:1
               })
             }
 
@@ -90,7 +91,8 @@ class App extends React.Component{
              this.setState ({
                 prevOperand : `${this.state.prevOperand}${this.state.input}${event.target.value}`,
                 lastOperator:event.target.value,
-                status:'0'
+                status:'0',
+                
              })   
           
              switch (this.state.lastOperator){
@@ -98,7 +100,7 @@ class App extends React.Component{
                       return this.setState({ 
                             prevResult:parseFloat(this.state.prevResult)+(parseFloat(this.state.input)*this.state.minus),
                             input : parseFloat(this.state.prevResult)+(parseFloat(this.state.input)*this.state.minus), 
-                            
+                            minus:1,
                             status:'0'
                             
                           })
@@ -107,21 +109,21 @@ class App extends React.Component{
                       return this.setState({ 
                               prevResult:parseFloat(this.state.prevResult)/(parseFloat(this.state.input)*this.state.minus),
                               input : parseFloat(this.state.prevResult)/(parseFloat(this.state.input)*this.state.minus), 
-                              
+                              minus:1
                             })
                     break;
                     case '*' : 
                       return this.setState({ 
                               prevResult:parseFloat(this.state.prevResult)*(parseFloat(this.state.input)*this.state.minus),
                               input : parseFloat(this.state.prevResult)*(parseFloat(this.state.input)*this.state.minus),
-                              
+                              minus:1
                             })
                     break;
                     case '-' : 
                       return this.setState({ 
                               prevResult:parseFloat(this.state.prevResult)-(parseFloat(this.state.input)*this.state.minus),
                               input : parseFloat(this.state.prevResult)-(parseFloat(this.state.input)*this.state.minus),
-                              
+                              minus:1
                             })
               }
         }
