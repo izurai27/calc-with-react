@@ -1,8 +1,8 @@
 
 import React from 'react';
-import logo from './logo.svg';
+// import logo from './logo.svg';
 import './App.css';
-import { eventWrapper } from '@testing-library/user-event/dist/utils';
+// import { eventWrapper } from '@testing-library/user-event/dist/utils';
 
 
 class App extends React.Component{
@@ -104,27 +104,29 @@ class App extends React.Component{
                             status:'0'
                             
                           })
-                    break;
+                      // break;
                     case '/' : 
                       return this.setState({ 
                               prevResult:parseFloat(this.state.prevResult)/(parseFloat(this.state.input)*this.state.minus),
                               input : parseFloat(this.state.prevResult)/(parseFloat(this.state.input)*this.state.minus), 
                               minus:1
                             })
-                    break;
+                    // break;
                     case '*' : 
                       return this.setState({ 
                               prevResult:parseFloat(this.state.prevResult)*(parseFloat(this.state.input)*this.state.minus),
                               input : parseFloat(this.state.prevResult)*(parseFloat(this.state.input)*this.state.minus),
                               minus:1
                             })
-                    break;
+                    // break;
                     case '-' : 
                       return this.setState({ 
                               prevResult:parseFloat(this.state.prevResult)-(parseFloat(this.state.input)*this.state.minus),
                               input : parseFloat(this.state.prevResult)-(parseFloat(this.state.input)*this.state.minus),
                               minus:1
                             })
+                    default:
+                    break;
               }
         }
     }
@@ -173,28 +175,37 @@ class App extends React.Component{
     
     return (
       
+        
+      
       <div className="container">
+        {/* <div>Calc</div> */}
         <div className="layar">
-          <input value={this.state.prevOperand} className='layarinput' ></input>
-          <input id="display" value={this.state.input} className='layarinput' ></input>
+          <input value={this.state.prevOperand} className='layarinput prevCalc' ></input>
+          <input id="display" value={this.state.input} className='layarinput currentInput' ></input>
         </div>
       
-        <div className="number">
-          {numbers.map(number => <button id={number.idNum} value={number.num} onClick={this.getValue} className="button num" key={number.num}>{number.num}</button>)}
-          <button id="decimal" value='.' className="button num" onClick={this.getValue}>.</button>
-          <button id='equals'  value='=' className="button num" onClick={this.handleOperator}>=</button>
-        </div>
+      <div className='buttons'>
 
-        <div className="operator">
-          {operators.map(operator=><button id={operator.idOp} value={operator.op} onClick={this.handleOperator} className="button" key={operator.opKey}>{operator.op}</button>)}
+        <div className='top'>
+          <div className="number">
+            {numbers.map(number => <button id={number.idNum} value={number.num} onClick={this.getValue} className="button num" key={number.num}>{number.num}</button>)}
+            <button id="decimal" value='.' className="button num" onClick={this.getValue}>.</button>
+            <button id='equals'  value='=' className="button num" onClick={this.handleOperator}>=</button>
+          </div>
+
+          <div className="operator">
+            {operators.map(operator=><button id={operator.idOp} value={operator.op} onClick={this.handleOperator} className="button" key={operator.opKey}>{operator.op}</button>)}
+          </div>
         </div>
-      
+        
         <div className='clear'>
           <button value='-' onClick={this.getValue}>+/-</button>
-          <button id='clear' className="button" onClick={this.handleAC}>AC</button>
-          <button className="button" onClick={this.handleClear}>C</button>
+          <button id='clear' className="button c" onClick={this.handleAC}>AC</button>
+          <button className="button c" onClick={this.handleClear}>C</button>
         </div>
       </div>
+    </div>
+    
     )
   }
 }
