@@ -171,7 +171,7 @@ class App extends React.Component{
       {op:'-', opKey:4, idOp: 'subtract'}
     ];
     
-    console.log(this.state.prevResult,this.state.minus,'dobel operator ?'+/[\+|\-|\*|\/]$/.test(this.state.prevOperand)+' lastinput : '+this.state.lastInput,"input: "+this.state.input,'prevoperand : '+this.state.prevOperand);
+    // console.log(this.state.prevResult,this.state.minus,'dobel operator ?'+/[\+|\-|\*|\/]$/.test(this.state.prevOperand)+' lastinput : '+this.state.lastInput,"input: "+this.state.input,'prevoperand : '+this.state.prevOperand);
     
     return (
       
